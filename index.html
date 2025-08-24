@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Love mo ba ako?</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background-image: url('stuart.jpg'); 
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff2e63;
+      margin-top: 80px;
+      text-shadow: 2px 2px #fff;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+      position: relative;
+      height: 300px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      z-index: 2;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      min-width: 80px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .yes {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .no, .maybe {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    /* Center the gif container */
+    .gif-container {
+      display: none;
+      margin: 30px auto 0;
+      max-width: 320px;
+      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    #happy-gif {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 1s ease-out forwards;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.5);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Love mo ba ako?</h1>
+
+  <div class="btn-container">
+    <button class="yes" onclick="showLove()">Yes</button>
+    <button class="no" onclick="moveButton(this)">No</button>
+    <button class="maybe" onclick="moveButton(this)">Maybe</button>
+  </div>
+
+  <div class="gif-container" id="gif-container">
+    <img id="happy-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHZxbnB4dHV3OTk4b2VvZ2p5MGsxbWM2ZGZmamNuOXl5ZW9uYm14dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3xz2BNVxo4D9mO1qLu/giphy.gif" alt="Happy" />
+  </div>
+
+  <audio id="cheer-sound" src="https://www.soundjay.com/human/sounds/applause-8.mp3"></audio>
+
+  <script>
+    function moveButton(button) {
+      const container = document.querySelector('.btn-container');
+      const maxX = container.clientWidth - button.offsetWidth;
+      const maxY = container.clientHeight - button.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      button.style.position = 'absolute';
+      button.style.left = `${randomX}px`;
+      button.style.top = `${randomY}px`;
+    }
+
+    function showLove() {
+      const gifContainer = document.getElementById('gif-container');
+      gifContainer.style.display = 'block';
+      gifContainer.scrollIntoView({behavior: "smooth", block: "center"});
+
+      const sound = document.getElementById('cheer-sound');
+      sound.play();
+
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = window.innerHeight - 50 + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 1000);
+      }
+    }
+  </script>
+
+</body>
+</html>
